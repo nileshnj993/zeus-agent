@@ -17,7 +17,7 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class=" text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center" id="login">
-                <img src="images/logo.png" width="80%" height="80%">
+                <img src="images/logo.png" width="80%" height="80%" style="margin-top: -20px;">
                 
               <div class="mb-md-5 mt-md-4 pb-5" id="centered-form">
                 <p id="name">Zeus Agent</p>
@@ -25,25 +25,39 @@
                 <p class="text-white-50 mb-5">Please enter your Email and Password!</p> -->
   
                 <div class="form-outline form-white mb-4">
-                  <input type="email" placeholder ="Enter Email ID" id="typeEmailX" class="form-control form-control-lg" />
+                  <input type="text" placeholder ="Enter Name" id="typeEmailX" class="form-control form-control-lg" />
                   <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                 </div>
   
+
+                <div class="form-outline form-white mb-4">
+                    <input type="email" placeholder ="Enter Email ID" id="typeEmailX" class="form-control form-control-lg" />
+                    <!-- <label class="form-label" for="typeEmailX">Email</label> -->
+                  </div>
+
                 <div class="form-outline form-white mb-4">
                   <input placeholder ="Enter Password" type="password" id="typePasswordX" class="form-control form-control-lg" />
                   <!-- <label class="form-label" for="typePasswordX">Password</label> -->
                 </div>
+                
+                <input type="radio" id="employee" name="type" value="emp">
+                <label id="empBut" for="employee">Employee</label>
+                <input type="radio" id="customer" name="type" value="cus">
+                <label for="customer">Customer</label><br>
+
+
+                
 <!--   
                 <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
   
-                <button class="btn btn-outline-light btn-lg px-5" id="submit" type="submit"><a href="/home">Login</a></button>
+                <button class="btn btn-outline-light btn-lg px-5" id="submit" type="submit">Register</button>
   
                 
   
               </div>
   
               <div>
-                <p class="mb-0">Don't have an account? <a href="/register"><span id="forgot">Sign Up</span></a></p>
+                <p class="mb-0">Already have an account? <a href="/"><span id="forgot">Login</span></a></p>
               </div>
   
             </div>
