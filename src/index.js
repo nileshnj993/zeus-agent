@@ -12,11 +12,6 @@ app.get("/test", (req,res)=>{
     res.send("testing");
 })
 
-// app.get("/home",(req,res)=>{
-//     res.sendFile("/home/njeyepatch/Sabre/zeus-agent/login-framework/public/index.html")
-// })
-
-
 app.listen(PORT,()=>{
     console.log("Running on port "+PORT);
 })
