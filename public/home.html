@@ -1,7 +1,7 @@
-<html>
+<!-- <html>
     <head>
         <title>Zeus Agent</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="./css/styles.css">
     </head>
     <body>
         <div id="main-menu">
@@ -9,18 +9,331 @@
               Zeus Agent
             </div>
             <div id="navbar">
-                <a href="/">
-                    <input type="button" name="logout" id="logout" value="Logout" style="background-color: bisque;">
+                <a href="/prevNotes">
+                    <input type="button" name="prevNotes" id="prevNotes" value="View Previous Notes" style="background-color: bisque; width: fit-content;">
+                </a>
+                <a href="/logout">
+                    <input type="button" name="logout" id="logout" value="Logout" style="background-color: bisque; width: fit-content;">
                 </a>
             </div>
         </div>
         <div id="content" style="padding-top: 50px; float: left;">
-            <div class="stickynote" style="width: 10px; margin-left: 50px;">
-                <input type="text" style="height: 300px;" placeholder="Type Your Sticky Note Here...">
-            </div>
-            <div class="create" style="margin-top: 20px; margin-left: 210px;"> 
-                <input type="button" value="Create">
-            </div>
+            <form action="/createNote" method="POST" enctype="multipart/form-data">
+                <div class="stickynote" style="width: 10px; margin-left: 100px;">
+                    <input type="text" name="stickyNoteTitle" id="stickyNoteTitle" style="height: 50px;" placeholder="Type The Title Of Your Sticky Note Here..." required>
+                </div>
+                <br>
+                <div class="stickynote" style="width: 10px; margin-left: 100px;">
+                    <input type="text" name="stickyNoteText" id="stickyNoteText" style="height: 300px;" placeholder="Type Your Sticky Note Here..." required>
+                </div>
+                <div class="functions" style="margin-top: 20px; margin-left: 80px;">
+                    <label for="files" id="imagebtn">Select Image</label>
+                    <input type="file" id="files" name="image" style="visibility: hidden;"> 
+                    <input type="submit" value="Create" style="margin-left: 10px; background-color: darksalmon;">
+                </div>
+            </form>
         </div>
     </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title>Zeus Agent</title>
+	<!--Bootstrap Cdn -->
+	<link rel="stylesheet"
+		href=
+"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+		integrity=
+"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+		crossorigin="anonymous">
+	<!-- fontawesome cdn For Icons -->
+	<link rel="stylesheet"
+		href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+		integrity=
+"sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+		crossorigin="anonymous" />
+	<link rel="stylesheet"
+		href=
+"https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+		integrity=
+"sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+		crossorigin="anonymous" />
+
+	<!--Internal CSS start-->
+	<style>
+        body{
+            background-color: #4A5767;
+        }
+        button {
+  z-index: 1;
+}
+		h1 {
+			padding-top: 40px;
+			padding-bottom: 40px;
+			text-align: center;
+			color: red;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+            font-weight: bolder;
+		}
+		
+		section {
+			padding: 5%;
+			padding-top: 0;
+			height: 100vh;
+		}
+		
+		.side {
+			margin-left: 0;
+		}
+		
+		button {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+			margin: 10px;
+			border-color: #e4e4e4 !important;
+            background-color: #e4e4e4 !important;
+			color: black !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			margin-bottom: 25px;
+            
+            font-weight: bold !important;
+		}
+
+        input[type=submit] {
+            padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 5px;
+   padding-right: 5px;
+    background:#e4e4e4; 
+    border-radius: 10px;
+    cursor:pointer;
+    border-width: thin;
+    border-style: solid;
+    margin-left: 200px;
+}
+
+
+input[type=button] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background:#e4e4e4; 
+    border-radius: 10px;
+    cursor:pointer;
+    border-width: thin;
+    border-style: solid;
+    margin-left: 1100px;
+    position: absolute;
+}
+
+        
+#imagebtn {
+   
+   width: fit-content;
+   height: fit-content;
+  margin-top: 20px;
+  margin-left: 110px;
+   border-radius: 10px;
+   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #e4e4e4;
+   font-size: medium;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 5px;
+   padding-right: 5px;
+   border-style: solid;
+   position: relative;
+   border-width: thin;
+ }
+
+ #imagebtn:hover{
+    cursor: pointer;
+ }
+
+
+
+
+
+
+
+		
+		button:hover {
+			background-color: red !important;
+		}
+		
+		textarea {
+			padding: 3%;
+			border-color: black;
+			border-width: thick;
+		}
+		
+		.flex-box {
+			display: flex;
+			justify-content: center;
+		}
+
+       #prevNotes, #logout{
+        padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background:#e4e4e4; 
+    border-radius: 10px;
+    cursor:pointer;
+    border-width: thin;
+    border-style: solid;
+   
+       }
+        
+	</style>
+	<!--Internal CSS End-->
+</head>
+<!--Body start-->
+
+<body>
+	<section class="">
+		<h1>Zeus Agent</h1>
+		<div class="flex-box">
+           
+			<div class="row">
+         
+				<div class="col">
+                   
+					<!-- Adding different buttons for
+						different functionality-->
+					<!--onclick attribute is added to give
+						button a work to do when it is clicked-->
+					<button type="button"
+							onclick="f1()"
+							class=" shadow-sm btn btn-outline-secondary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Bold Text">
+			Bold</button>
+					<button type="button"
+							onclick="f2()"
+							class="shadow-sm btn btn-outline-success"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Italic Text">
+			Italic</button>
+					<button type="button"
+							onclick="f3()"
+							class=" shadow-sm btn btn-outline-primary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Left Align">
+			<i class="fas fa-align-left"></i></button>
+					<button type="button"
+							onclick="f4()"
+							class="btn shadow-sm btn-outline-secondary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Center Align">
+			<i class="fas fa-align-center"></i></button>
+					<button type="button"
+							onclick="f5()"
+							class="btn shadow-sm btn-outline-primary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Right Align">
+			<i class="fas fa-align-right"></i></button>
+					<button type="button"
+							onclick="f6()"
+							class="btn shadow-sm btn-outline-secondary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Uppercase Text">
+			Upper Case</button>
+					<button type="button"
+							onclick="f7()"
+							class="btn shadow-sm btn-outline-primary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Lowercase Text">
+			Lower Case</button>
+					<button type="button"
+							onclick="f8()"
+							class="btn shadow-sm btn-outline-primary"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Capitalize Text">
+			Capitalize</button>
+					<button type="button"
+							onclick="f9()"
+							class="btn shadow-sm btn-outline-primary side"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="Tooltip on top">
+			Clear Text</button>
+
+            <a href="/prevNotes">
+                <button style="margin-left: 200px;position: fixed; margin-top: 300px;" name="prevNotes" id="prevNotes" value="View Previous Notes"> View Previous Notes </button>            
+            </a>
+ 
+            <a href="/logout">
+                <button style="margin-left: 200px;position: fixed; margin-top: 400px;" name="logout" id="logout" value="Logout"> Logout </button>
+            </a>
+          
+				</div>
+			</div>
+		</div>
+		
+     
+		<div class="row">
+			<div class="col-md-3 col-sm-3">
+			</div>
+			<div class="col-md-6 col-sm-9">
+				<div class="flex-box">
+                    <div id="content">
+                        <form action="/createNote" method="POST" enctype="multipart/form-data">
+                            <div class="stickynote" style="text-align: center;">
+                                <input type="text" name="stickyNoteTitle" id="stickyNoteTitle" style="height: 50px;" placeholder="Title Of Your Sticky Note" required>
+                            </div>
+                            <br>
+                            <div class="stickynote">
+                            <textarea id="stickyNoteText" name="stickyNoteText"
+							class="input shadow"
+							
+							rows="15"
+							cols="100"
+							placeholder="Your text here">
+					        </textarea>
+                        </div>
+                            <div class="functions">
+                                <label for="files" id="imagebtn">Upload Image</label>
+                                <input type="file" id="files" name="image" style="visibility: hidden;"> 
+                                <input type="submit" value="Create Sticky Note">
+                            </div>
+                        </form>
+                    </div>
+					<!-- <textarea id="textarea1"
+							class="input shadow"
+							name="name"
+							rows="15"
+							cols="100"
+							placeholder="Your text here">
+					</textarea> -->
+				</div>
+			</div>
+			<div class="col-md-3">
+			</div>
+		</div>
+	</section>
+	<br>
+	<br>
+	
+
+	<!--External JavaScript file-->
+	<script src="./js/home.js"></script>
+</body>
+
 </html>

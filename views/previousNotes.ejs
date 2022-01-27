@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Zeus Agent</title>
+    <link rel="stylesheet" href="../public/css/styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div id="main-menu">
+      <div id="comdetails">Zeus Agent</div>
+      <div id="navbar">
+        <a href="/home">
+          <input
+            type="button"
+            name="goBack"
+            id="goBack"
+            value="Create New Note"
+            style="background-color: bisque; width: fit-content"
+          />
+        </a>
+        <a href="/logout">
+          <input
+            type="button"
+            name="logout"
+            id="logout"
+            value="Logout"
+            style="background-color: bisque; width: fit-content"
+          />
+        </a>
+      </div>
+    </div>
+
+    
+    <% if (Object.entries(data.desc).length === 0) { %>
+    <h1 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+      You Haven't Created Any Sticky Notes Yet.
+    </h1>
+    
+    <% } else { %>
+    <div>
+      <% for(var i=0; i< data.desc.length; i++) { %>
+      <div id="noteTitle">
+        <p style="font-size: large">Title:&nbsp;<%=data.desc[i].title %></p>
+        <form action="/viewFullNote" method="POST">
+          <input type="text" name="btnid" id="btnid" style="display: none;" value=<%=i %>>
+          <input type="submit" value="View Note" id="viewNote">
+        </form>
+      </div>
+      <hr />
+      <% }; %>
+    </div>
+    <% } %>
+  </body>
+</html>

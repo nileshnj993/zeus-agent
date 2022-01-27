@@ -3,8 +3,23 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+const bodyparser = require("body-parser");
 const app = express();
+app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, "../views"));
+app.use(bodyparser.json());
 const saltRounds = 5;
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join(__dirname, "../public","../public/images"));
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  });
+  const upload = multer({ storage: storage }).single("image");
 
 
 mongoose.connect("mongodb://localhost/zeusagent", {
@@ -18,7 +33,8 @@ db.on("error", (err) => console.log(err));
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true     }));
+
 
 const userSchema = mongoose.Schema({
   name: String,
@@ -27,6 +43,21 @@ const userSchema = mongoose.Schema({
   designation: String
 });
 const User = new mongoose.model("users", userSchema);
+
+const userNotes = mongoose.Schema({
+  email: String,
+  desc: [
+    {
+      title: String,
+      text: String,
+      date: String,
+      img: String,
+    },
+  ],
+});
+const stickyNote = new mongoose.model("stickyNotes", userNotes);
+
+
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "index.html"));
@@ -41,7 +72,14 @@ app.get("/home", (req, res) => {
     res.sendFile(path.join(__dirname, "../public", "home.html"));
   });
 
-app.post("/create", (req, res) => {
+app.get("/logout", (req, res) => {
+    // cookies.set('userEmail', {expires: new Date(0)});
+    res.cookie("userEmail","", {expires:new Date(0)});
+    //res.clearCookie("userEmail");
+    res.sendFile(path.join(__dirname, "../public", "index.html"));
+});
+
+app.post("/createAcc", (req, res) => {
   let plainPassword = req.body.password;
   bcrypt.hash(plainPassword, saltRounds, (err, hashedPassword) => {
     if (err) throw err;
@@ -58,6 +96,16 @@ app.post("/create", (req, res) => {
         res.sendFile(path.join(__dirname, "../public", "registered.html"));
       }
     });
+    var userNote = {
+        email: req.body.email,
+        desc: [],
+      };
+      stickyNote.create(userNote, (err, response) => {
+        if (err) {
+          res.status(500).send();
+          throw err;
+        }
+      });
   });
 });
 
@@ -75,6 +123,7 @@ app.post("/home", (req, res) => {
         bcrypt.compare(loginDetails.password, response[0].password, (error, resp) => {
           if (error) throw error;
           if (resp === true) {
+            res.cookie("userEmail", loginDetails.email);
             res.sendFile(path.join(__dirname, "../public", "home.html"));
           } else {
             res.sendFile(path.join(__dirname, "../public", "wrongPassword.html"));
@@ -84,6 +133,52 @@ app.post("/home", (req, res) => {
     }
   });
 });
+
+app.post("/createNote", (req, res) => {
+    let imagePath;
+    let note;
+    upload(req, res, (err) => {
+      if (err) throw err;
+      else {
+        if (req.file == undefined) imagePath = "";
+        else imagePath = "images/" + req.file.filename;
+        note = {
+          title: req.body.stickyNoteTitle,
+          text: req.body.stickyNoteText,
+          date: new Date(),
+          img: imagePath,
+        };
+        stickyNote.updateOne({ email: req.cookies.userEmail }, { $push: { desc: note } }, (err, response) => {
+          if (err) throw err;
+          else {
+            res.sendFile(path.join(__dirname, "../public", "getURL.html"));
+          }
+        });
+      }
+    });
+  });
+  
+  app.get("/prevNotes", (req, res) => {
+    stickyNote.find({ email: req.cookies.userEmail }, (err, response) => {
+      if (err) throw err;
+      else {
+        var data = response[0];
+        res.render("previousNotes", { data: data });
+      }
+    });
+  });
+  
+  
+  app.post("/viewFullNote", (req, res) => {
+    stickyNote.find({ email: req.cookies.userEmail }, (err, response) => {
+      if (err) throw err;
+      else {
+        let individualNote = response[0].desc[req.body.btnid];
+        res.render("noteContent", {data: individualNote});
+      }
+    });
+  });
+  
 
 
 
