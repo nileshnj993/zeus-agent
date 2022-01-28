@@ -159,11 +159,23 @@ app.post("/createNote", (req, res) => {
   });
   
   app.get("/prevNotes", (req, res) => {
+      console.log(req.cookies);
+      if(req.cookies.userEmail==""){
+        res.render("previousNotes", { data: "session-over"});
+      }
     stickyNote.find({ email: req.cookies.userEmail }, (err, response) => {
       if (err) throw err;
       else {
-        var data = response[0];
-        res.render("previousNotes", { data: data });
+          console.log("Response:",response);
+          if(response.length==0){
+            console.log('empty');
+            res.send("<h3 style='font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'> Session expired! Please login again. </h3>");
+          }
+          else{
+            var data = response[0];
+            res.render("previousNotes", { data: data });
+          }
+   
       }
     });
   });

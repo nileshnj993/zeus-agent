@@ -225,6 +225,13 @@ input[type=button] {
 							data-placement="top"
 							title="Italic Text">
 			Italic</button>
+            <button type="button"
+            onclick="f8()"
+            class="btn shadow-sm btn-outline-primary"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Underline Text">
+Underline</button>
 					<button type="button"
 							onclick="f3()"
 							class=" shadow-sm btn btn-outline-primary"
@@ -260,13 +267,7 @@ input[type=button] {
 							data-placement="top"
 							title="Lowercase Text">
 			Lower Case</button>
-					<button type="button"
-							onclick="f8()"
-							class="btn shadow-sm btn-outline-primary"
-							data-toggle="tooltip"
-							data-placement="top"
-							title="Capitalize Text">
-			Capitalize</button>
+				
 					<button type="button"
 							onclick="f9()"
 							class="btn shadow-sm btn-outline-primary side"
@@ -300,18 +301,12 @@ input[type=button] {
                             </div>
                             <br>
                             <div class="stickynote">
-                            <textarea id="stickyNoteText" name="stickyNoteText"
-							class="input shadow"
-							
-							rows="15"
-							cols="100"
-							placeholder="Your text here">
-					        </textarea>
+                            <textarea id="stickyNoteText" name="stickyNoteText" class="input shadow" rows="15" cols="100" placeholder="Your text here..."></textarea>
                         </div>
                             <div class="functions">
-                                <label for="files" id="imagebtn">Upload Image</label>
+                                <label for="files" id="imagebtn" style="font-weight: bolder;">Upload Image</label>
                                 <input type="file" id="files" name="image" style="visibility: hidden;"> 
-                                <input type="submit" value="Create Sticky Note">
+                                <input type="submit"  style="font-weight: bolder;" value="Create Sticky Note">
                             </div>
                         </form>
                     </div>
