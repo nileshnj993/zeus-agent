@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const bodyparser = require("body-parser");
+const date = require("date-and-time");
 const app = express();
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, "../views"));
@@ -22,7 +23,7 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage }).single("image");
 
 
-mongoose.connect("mongodb://localhost/zeusagent", {
+mongoose.connect("mongodb+srv://team12:team12sabre@zeus-agent.xbtgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -52,6 +53,7 @@ const userNotes = mongoose.Schema({
       text: String,
       date: String,
       img: String,
+      expire: String
     },
   ],
 });
@@ -142,11 +144,14 @@ app.post("/createNote", (req, res) => {
       else {
         if (req.file == undefined) imagePath = "";
         else imagePath = "images/" + req.file.filename;
+        const time = new Date();
+        const expiretime = date.addSeconds(time, req.body.expirationTime);
         note = {
           title: req.body.stickyNoteTitle,
           text: req.body.stickyNoteText,
-          date: new Date(),
+          date: time,
           img: imagePath,
+          expire: expiretime,
         };
         stickyNote.updateOne({ email: req.cookies.userEmail }, { $push: { desc: note } }, (err, response) => {
           if (err) throw err;
@@ -159,7 +164,7 @@ app.post("/createNote", (req, res) => {
   });
   
   app.get("/prevNotes", (req, res) => {
-      console.log(req.cookies);
+
       if(req.cookies.userEmail==""){
         res.render("previousNotes", { data: "session-over"});
       }
@@ -172,8 +177,18 @@ app.post("/createNote", (req, res) => {
             res.send("<h3 style='font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;'> Session expired! Please login again. </h3>");
           }
           else{
+            var time = new Date();
             var data = response[0];
-            res.render("previousNotes", { data: data });
+            var dataSend = {
+              email: data.email,
+              desc: []
+            }
+            var j = 0;
+            for(var i=0; i< data.desc.length; i++){
+              if(time < new Date(data.desc[i].expire))
+                dataSend.desc[j++] = data.desc[i];
+            }
+            res.render("previousNotes", { data: dataSend });
           }
    
       }
@@ -185,7 +200,18 @@ app.post("/createNote", (req, res) => {
     stickyNote.find({ email: req.cookies.userEmail }, (err, response) => {
       if (err) throw err;
       else {
-        let individualNote = response[0].desc[req.body.btnid];
+        var time = new Date();
+        var data = response[0];
+        var dataSend = {
+          email: data.email,
+          desc: []
+        }
+        var j = 0;
+        for(var i=0; i< data.desc.length; i++){
+          if(time < new Date(data.desc[i].expire))
+            dataSend.desc[j++] = data.desc[i];
+        }
+        let individualNote = dataSend.desc[req.body.btnid];
         res.render("noteContent", {data: individualNote});
       }
     });

@@ -29,24 +29,24 @@
                 <div id="signupform">
                     <form action="/createAcc" method="POST">
                         <div class="form-outline form-white mb-4">
-                            <input type="text" name="name" placeholder ="Enter Name" id="nameUser" class="form-control form-control-lg" />
+                            <input type="text" required name="name" placeholder ="Enter Name" id="nameUser" class="form-control form-control-lg"/>
                             <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                           </div>
             
           
                           <div class="form-outline form-white mb-4">
-                              <input type="email" name="email" placeholder ="Enter Email ID" id="email" class="form-control form-control-lg" />
+                              <input type="email" required name="email" placeholder ="Enter Email ID" id="email" class="form-control form-control-lg" />
                               <!-- <label class="form-label" for="typeEmailX">Email</label> -->
                             </div>
           
                           <div class="form-outline form-white mb-4">
-                            <input placeholder ="Enter Password" name="password" type="password" id="password" class="form-control form-control-lg" />
+                            <input placeholder ="Enter Password" required name="password" type="password" id="password" class="form-control form-control-lg" />
                             <!-- <label class="form-label" for="typePasswordX">Password</label> -->
                           </div>
                           
-                          <input type="radio" id="employee" name="designation" value="employee">
+                          <input type="radio" required id="employee" name="designation" value="employee">
                           <label id="empBut" for="employee">Employee</label>
-                          <input type="radio" id="customer" name="designation" value="customer">
+                          <input type="radio" required id="customer" name="designation" value="customer">
                           <label for="customer">Customer</label><br>
           
           

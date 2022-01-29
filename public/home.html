@@ -160,13 +160,19 @@ input[type=button] {
 
 
 
-
+ .changeCol:hover{
+    background-color: red !important;
+            transition: all 0.5s ease-in-out 0s;
+            transition: all 0.8s ease-in-out 0s;
+ }
 
 
 
 		
 		button:hover {
 			background-color: red !important;
+            transition: all 0.5s ease-in-out 0s;
+            transition: all 0.8s ease-in-out 0s;
 		}
 		
 		textarea {
@@ -296,18 +302,31 @@ Underline</button>
 				<div class="flex-box">
                     <div id="content">
                         <form action="/createNote" method="POST" enctype="multipart/form-data">
-                            <div class="stickynote" style="text-align: center;">
-                                <input type="text" name="stickyNoteTitle" id="stickyNoteTitle" style="height: 50px;" placeholder="Title Of Your Sticky Note" required>
+                            <div class="stickynote" style="text-align: center; margin-top: 40px;">
+                                <input type="text" name="stickyNoteTitle" id="stickyNoteTitle" style="height: 50px;margin-left: -30px;" placeholder="Title Of Your Sticky Note" required>
+                                <label for="expirationTime" style="padding-right: 5px;font-weight: bolder; color:black; margin-left: 50px;" >Expiration Time</label>
+                                <select name="expirationTime" id="expirationTime">
+                                    <option value="60">1 Minute</option>
+                                    <option value="600">10 Minutes</option>
+                                    <option value="3600">1 Hour</option>
+                                    <option value="21600">6 Hours</option>
+                                    <option value="43200">12 Hours</option>
+                                    <option value="86400">1 Day</option>
+                                    <option value="604800">1 Week</option>
+                                </select>
                             </div>
+                           
                             <br>
                             <div class="stickynote">
-                            <textarea id="stickyNoteText" name="stickyNoteText" class="input shadow" rows="15" cols="100" placeholder="Your text here..."></textarea>
+                            <textarea id="stickyNoteText" name="stickyNoteText" class="input shadow" rows="15" cols="100" placeholder="Your text here..." required></textarea>
                         </div>
                             <div class="functions">
-                                <label for="files" id="imagebtn" style="font-weight: bolder;">Upload Image</label>
+                                <label for="files" id="imagebtn" class="changeCol" style="font-weight: bolder;">Upload Image</label>
                                 <input type="file" id="files" name="image" style="visibility: hidden;"> 
-                                <input type="submit"  style="font-weight: bolder;" value="Create Sticky Note">
+                                <input type="submit" class="changeCol" style="font-weight: bolder;" value="Create Sticky Note">
                             </div>
+
+                           
                         </form>
                     </div>
 					<!-- <textarea id="textarea1"

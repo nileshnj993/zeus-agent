@@ -84,7 +84,7 @@
                 </a>
             </div>
         </div>
-        <div class="boxed" style="width:500px;height:150px;border:1px solid #000; margin: auto; background-color: #e4e4e4;">
+        <div class="boxed" style="width:500px;height:200px;border:1px solid #000; margin: auto; background-color: #e4e4e4;">
 
         <div id="fullnoteDesc" style="text-align: center;color: black; margin: auto;">
             <p style="margin-top:10px ;"><b>Title:</b>&nbsp;<%= data.title %></p>
@@ -92,6 +92,8 @@
             <p><b>Description:</b>&nbsp;<%= data.text %></p>
         
             <p><b>Created On:</b>&nbsp;<%= data.date.substring(0,25) %> </p>
+            <p><b>Expires On:</b>&nbsp;<%= data.expire.substring(0,25) %></p>
+          
         </div>
     </div>
     <div style="margin-top: 100px;text-align: center;">
