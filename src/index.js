@@ -7,6 +7,8 @@ const multer = require("multer");
 const bodyparser = require("body-parser");
 const date = require("date-and-time");
 const app = express();
+const config = require('dotenv').config();
+
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, "../views"));
 app.use(bodyparser.json());
@@ -23,7 +25,7 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage }).single("image");
 
 
-mongoose.connect("mongodb+srv://team12:team12sabre@zeus-agent.xbtgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://team12:"+process.env.DB_PASSWORD+"@zeus-agent.xbtgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -53,13 +55,21 @@ const userNotes = mongoose.Schema({
       text: String,
       date: String,
       img: String,
-      expire: String
+      expire: String,
+      url:String,
     },
   ],
 });
 const stickyNote = new mongoose.model("stickyNotes", userNotes);
 
-
+const publicSchema = mongoose.Schema({
+    title: String,
+    text: String,
+    date: String,
+    expire: String,
+    img: String,
+  });
+const Public = new mongoose.model("public", publicSchema);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "index.html"));
@@ -81,7 +91,12 @@ app.get("/logout", (req, res) => {
     res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
 
-app.post("/createAcc", (req, res) => {
+app.post("/createAcc", async (req, res) => {
+  const user = await User.findOne({email:req.body.email});
+  if(user){
+      res.send('<html><head><title>Zeus Agent</title> <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel = "stylesheet" href="css/styles.css"><link rel="icon" href="images/plane.png"></head><body><div class="card-body p-5 text-center" id="login"><img src="images/logo.png" width="10%" height="20%"></div><p style="font-weight: bolder;font-size: 300%;color:red;text-align: center; margin-top: -70px;">Zeus Agent</p><p style="font-weight: bolder;font-size: 200%;color:black;text-align: center; margin-top: 120px;">Email ID already Taken!</p><div id="successmsg" style="display: flex;justify-content: center;align-items: center;"><p style="font-size: 150%;color:black;"></p><a href="/register"><input type="button" class="btn btn-outline-light btn-lg px-5" value="Create My Account" style="width:fit-content;font-weight: bolder; margin-top: 120px;"> </a></div></body></html>')
+  }
+  else{
   let plainPassword = req.body.password;
   bcrypt.hash(plainPassword, saltRounds, (err, hashedPassword) => {
     if (err) throw err;
@@ -109,6 +124,7 @@ app.post("/createAcc", (req, res) => {
         }
       });
   });
+}
 });
 
 app.post("/home", (req, res) => {
@@ -139,9 +155,13 @@ app.post("/home", (req, res) => {
 app.post("/createNote", (req, res) => {
     let imagePath;
     let note;
+    
+    console.log("Response:", res);
     upload(req, res, (err) => {
+        console.log("Request:",req);
       if (err) throw err;
       else {
+          console.log(res);
         if (req.file == undefined) imagePath = "";
         else imagePath = "images/" + req.file.filename;
         const time = new Date();
@@ -153,12 +173,18 @@ app.post("/createNote", (req, res) => {
           img: imagePath,
           expire: expiretime,
         };
-        stickyNote.updateOne({ email: req.cookies.userEmail }, { $push: { desc: note } }, (err, response) => {
-          if (err) throw err;
-          else {
-            res.sendFile(path.join(__dirname, "../public", "getURL.html"));
-          }
-        });
+      
+        Public.create(note, (err, response) => {
+            if (err) res.status(500).send();
+            var id = response._id.toString();
+            note.url = process.env.ROUTE+id;
+            stickyNote.updateOne({ email: req.cookies.userEmail }, { $push: { desc: note } }, (err, response) => {
+              if (err) throw err;
+              else {
+                res.render("getURL", {data: id});
+              }
+            });
+          });
       }
     });
   });
@@ -217,6 +243,17 @@ app.post("/createNote", (req, res) => {
     });
   });
   
+app.get("/:id", (req,res) => {
+    Public.find({ _id: req.params.id}, (err, response) =>{
+    if(err)  res.status(404).send("<h1 style='text-align:center;margin-top:400px;align-items:center;'>Incorrect URL<h1>");
+    else {
+      var data = response[0];
+      if(new Date() > new Date(data.expire))
+        res.status(404).send("<h1 style='text-align:center;margin-top:400px;align-items:center;'>Note Has Expired<h1>");
+      res.render("publicNote", {data: data});
+    }
+  });
+});
 
 
 

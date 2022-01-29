@@ -1,8 +1,4 @@
 <html>
-  <head>
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-    
     <head>
         <meta charset="utf-8">
         <title>Zeus Agent</title>
@@ -51,7 +47,7 @@
                 text-align: center;
                 color: black;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                margin-top: -50px;
+                margin-top: 20px;
                 font-weight: bolder;
             }
        
@@ -69,41 +65,31 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     </head>
-    <!--Body start-->
     <body>
         <div id="main-menu">
             <div id="comdetails">
               <h1>Zeus Agent</h1>
             </div>
-            <div id="navbar" style="text-align: center; margin-bottom: 50px;">
-                <a href="/prevNotes">
-                    <input type="button" name="goBack" id="goBack" value="Go Back" style="background-color: #e4e4e4; font-weight: bolder; width: fit-content; margin-right: 30px;">
-                </a>
-                <a href="/logout">
-                    <input type="button" name="logout" id="logout" value="Logout" style="background-color: #e4e4e4; font-weight: bolder; width: fit-content; margin-right: 30px; margin-bottom: 50px;">
-                </a>
-            </div>
         </div>
         <div class="boxed" style="width:500px;height:200px;border:1px solid #000; margin: auto; background-color: #e4e4e4;">
 
-        <div id="fullnoteDesc" style="text-align: center;color: black; margin: auto;">
-            <p style="margin-top:10px ;"><b>Title:</b>&nbsp;<%= data.title %></p>
-     
-            <p><b>Description:</b>&nbsp;<%= data.text %></p>
-        
-            <p><b>Created On:</b>&nbsp;<%= data.date.substring(0,25) %> </p>
-            <p><b>Expires On:</b>&nbsp;<%= data.expire.substring(0,25) %></p>
-            <p><b>URL:</b>&nbsp;<a href="http://<%= data.url.substring(0,100) %>" target="_blank"><%= data.url.substring(0,100) %></a></p>
+            <div id="fullnoteDesc" style="text-align: center;color: black; margin: auto;">
+                <p style="margin-top:10px ;"><b>Title:</b>&nbsp;<%= data.title %></p>
+         
+                <p><b>Description:</b>&nbsp;<%= data.text %></p>
+            
+                <p><b>Created On:</b>&nbsp;<%= data.date.substring(0,25) %> </p>
+                <p><b>Expires On:</b>&nbsp;<%= data.expire.substring(0,25) %></p>
           
+              
+            </div>
         </div>
-    </div>
-    <div style="margin-top: 100px;text-align: center;">
-            <% if (data.img == "") { %>
-                <b><span style="font-size:30px; color:black;">No Image Uploaded</span></b>
-            <% } else { %>
-                <img src="<%=data.img%>" />
-            <% } %>
-    </div>
-     
+        <div style="margin-top: 100px;text-align: center;">
+                <% if (data.img == "") { %>
+                    <b><span style="font-size:30px; color:black;">No Image Uploaded</span></b>
+                <% } else { %>
+                    <img src="<%=data.img%>" />
+                <% } %>
+        </div>
     </body>
 </html>
