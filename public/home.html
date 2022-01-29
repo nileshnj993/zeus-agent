@@ -322,7 +322,7 @@ Underline</button>
                         </div>
                             <div class="functions">
                                 <label for="files" id="imagebtn" class="changeCol" style="font-weight: bolder;">Upload Image</label>
-                                <input type="file" id="files" name="image" style="visibility: hidden;"> 
+                                <input type="file" id="files" onchange="fileValidation()" name="image" style="visibility: hidden;"> 
                                 <input type="submit" class="changeCol" style="font-weight: bolder;" value="Create Sticky Note">
                             </div>
 
@@ -348,6 +348,24 @@ Underline</button>
 
 	<!--External JavaScript file-->
 	<script src="./js/home.js"></script>
+    <script>
+          fileValidation = () => {
+        const fi = document.getElementById('files');
+        // Check if any file is selected.
+        if (fi.files.length > 0) {
+            for (const i = 0; i <= fi.files.length - 1; i++) {
+  
+                const fsize = fi.files.item(i).size;
+                const file = Math.round((fsize / 1024));
+                // The size of the file.
+                if (file >= 2048) {
+                    alert(
+                      "File too big! Please select a file smaller than 2 MB");
+                } 
+            }
+        }
+    }
+    </script>
 </body>
 
 </html>

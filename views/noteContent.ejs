@@ -84,7 +84,7 @@
                 </a>
             </div>
         </div>
-        <div class="boxed" style="width:500px;height:200px;border:1px solid #000; margin: auto; background-color: #e4e4e4;">
+        <div class="boxed" style="width:500px;height:250px;border:1px solid #000; margin: auto; background-color: #e4e4e4;">
 
         <div id="fullnoteDesc" style="text-align: center;color: black; margin: auto;">
             <p style="margin-top:10px ;"><b>Title:</b>&nbsp;<%= data.title %></p>
@@ -101,9 +101,10 @@
             <% if (data.img == "") { %>
                 <b><span style="font-size:30px; color:black;">No Image Uploaded</span></b>
             <% } else { %>
-                <img src="<%=data.img%>" />
+                <img style="height:500px;width:1000px;" src="<%=data.img%>" />
             <% } %>
     </div>
+    <br> <br>
      
     </body>
 </html>
