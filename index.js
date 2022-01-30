@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
-const upload = multer({ storage: storage }).single("image");
+const upload = multer({ storage: storage,  limits: { fileSize: 2000000 } }).single("image");
 
 mongoose.connect("mongodb+srv://team12:"+process.env.DB_PASSWORD+"@zeus-agent.xbtgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -142,7 +142,9 @@ app.post("/createNote", (req, res) => {
   let imagePath;
   let note;
   upload(req, res, (err) => {
-    if (err) throw err;
+    if (err) {
+        res.send('File too big!');
+    }
     else {
       if (req.file == undefined) imagePath = "";
       else imagePath = "images/" + req.file.filename;

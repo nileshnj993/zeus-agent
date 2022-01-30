@@ -106,7 +106,7 @@
                 </div>
                 <div class="functions" style="margin-top: 20px; margin-left: 135px;">
                     <label for="files" id="imagebtn">Select Image</label>
-                    <input type="file" id="files" name="image" style="visibility: hidden;"> 
+                    <input type="file" id="files" onchange="fileValidation()" name="image" style="visibility: hidden;"> 
                     <input type="submit" value="Create" style="margin-left: 10px; background-color: darkgray;">
                 </div>
             </form>
@@ -114,5 +114,23 @@
     </body>
 
     <script src="home.js"></script>
+    <script>
+        fileValidation = () => {
+      const fi = document.getElementById('files');
+      // Check if any file is selected.
+      if (fi.files.length > 0) {
+          for (const i = 0; i <= fi.files.length - 1; i++) {
+
+              const fsize = fi.files.item(i).size;
+              const file = Math.round((fsize / 1024));
+              // The size of the file.
+              if (file >= 2048) {
+                  alert(
+                    "File too big! Please select a file smaller than 2 MB");
+              } 
+          }
+      }
+  }
+  </script>
 
 </html>
