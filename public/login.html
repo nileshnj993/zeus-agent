@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="company">
+            <div id="logo">
+            <img src="images/logo.png" width="60%" height="75%"> 
+            </div>
+            <div id="companyname">
+                <h3 style="color: red; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Zeus&nbsp;Agent</h3>
+            </div>
+        </div>
+        <p>Fill The Below Details To Login Your Account</p>
+        <br>
+        <div id="loginform">
+            <form action="/home" method="POST">
+                <input type="email" name="email" id="email" placeholder="Enter Your E-mail..." required>
+                <br><br><br>
+                <input type="password" name="password" id="password" placeholder="Enter Your Password..." required>
+                <br><br>
+                <br><br><br>
+                <input type="submit" name="submit" id="submit" value="Login" style="margin-top: -30px;">
+            </form>
+        </div>
+        <br>
+        <div>
+            <p class="mb-0" style="font-size: large;">Don't have an account? <a href="/signup"><span id="forgot">Sign Up</span></a></p>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>

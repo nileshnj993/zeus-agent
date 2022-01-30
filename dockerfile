@@ -1,4 +1,4 @@
-# version of image is 10
+# version of image is 16
 FROM node:16
 # Create app directory in image
 RUN mkdir -p usr/src/app

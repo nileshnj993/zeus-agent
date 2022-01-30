@@ -1,95 +1,34 @@
 <html>
     <head>
-        <meta charset="utf-8">
         <title>Zeus Agent</title>
-        <!--Bootstrap Cdn -->
-        <link rel="stylesheet"
-            href=
-    "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-            integrity=
-    "sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-            crossorigin="anonymous">
-        <!-- fontawesome cdn For Icons -->
-        <link rel="stylesheet"
-            href=
-    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-            integrity=
-    "sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
-            crossorigin="anonymous" />
-        <link rel="stylesheet"
-            href=
-    "https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-            integrity=
-    "sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-            crossorigin="anonymous" />
-    
-        <!--Internal CSS start-->
-        <style>
-            body{
-                background-color: #4A5767;
-            }
-            button {
-      z-index: 1;
-        }
-            h1 {
-                padding-top: 40px;
-                padding-bottom: 40px;
-                text-align: center;
-                color: red;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    
-                font-weight: bolder;
-            }
-
-            h3{
-                padding-top: 40px;
-                padding-bottom: 40px;
-                text-align: center;
-                color: black;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                margin-top: 20px;
-                font-weight: bolder;
-            }
-       
-   
-            
-            .flex-box {
-                display: flex;
-                justify-content: center;
-            }
-            
-        </style>
-        <!--Internal CSS End-->
-        <link rel="stylesheet" href="../public/css/styles.css" />
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div id="main-menu">
             <div id="comdetails">
-              <h1>Zeus Agent</h1>
+              Zeus Agent
             </div>
         </div>
-        <div class="boxed" style="width:500px;height:200px;border:1px solid #000; margin: auto; background-color: #e4e4e4;">
-
-            <div id="fullnoteDesc" style="text-align: center;color: black; margin: auto;">
-                <p style="margin-top:10px ;"><b>Title:</b>&nbsp;<%= data.title %></p>
-         
-                <p><b>Description:</b>&nbsp;<%= data.text %></p>
-            
-                <p><b>Created On:</b>&nbsp;<%= data.date.substring(0,25) %> </p>
-                <p><b>Expires On:</b>&nbsp;<%= data.expire.substring(0,25) %></p>
-          
-              
-            </div>
-        </div>
-        <div style="margin-top: 100px;text-align: center;">
+        <div id="fullnoteDesc">
+            <% if(data == null) { %>
+                <h2 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin-top: 50px; text-align: center;">
+                    This Sticky Note Has Expired!
+                </h2>
+            <% } else { %>
+                <b>Title:</b>&nbsp;<%= data.title %>
+                <br><br>
+                <b>Description:</b>&nbsp;<%= data.text %>
+                <br><br>
+                <b>Created On:</b>&nbsp;<%= data.date.substring(0,25) %>
+                <br><br>
+                <b>Expires On:</b>&nbsp;<%= data.expire.substring(0,25) %>
+                <br><br>
                 <% if (data.img == "") { %>
-                    <b><span style="font-size:30px; color:black;">No Image Uploaded</span></b>
+                    No Image Uploaded
                 <% } else { %>
-                    <img style="height:500px;width:1000px;"src="<%=data.img%>" />
+                    <img src="<%=data.img%>" height="35%" width="35%" />
                 <% } %>
+            <% } %>
         </div>
     </body>
 </html>
