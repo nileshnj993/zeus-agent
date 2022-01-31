@@ -63,6 +63,7 @@ const publicSchema = mongoose.Schema({
   date: String,
   expire: String,
   img: String,
+
 });
 const Public = new mongoose.model("public", publicSchema);
 
@@ -84,6 +85,7 @@ app.get("/home", (req, res) => {
 });
 
 app.post("/createAcc", (req, res) => {
+  console.log(req.body);
   let plainPassword = req.body.password;
   bcrypt.hash(plainPassword, saltRounds, (err, hashedPassword) => {
     if (err) throw err;
