@@ -148,7 +148,12 @@ app.post("/createNote", (req, res) => {
     else {
       if (req.file == undefined) imagePath = "";
       else imagePath = "images/" + req.file.filename;
-      const time = new Date();
+
+      const date = new Date();
+      var ISToffSet = 330; 
+      offset= ISToffSet*60*1000;
+      var time = new Date(date.getTime()+offset);
+
       const expiretime = date.addSeconds(time, req.body.expirationTime);
       note = {
         title: req.body.stickyNoteTitle,
@@ -196,7 +201,10 @@ app.post("/viewFullNote", (req, res) => {
   stickyNote.find({ email: req.cookies.userEmail }, (err, response) => {
     if (err) throw err;
     else {
-      var time = new Date();
+      const date = new Date();
+      var ISToffSet = 330; 
+      offset= ISToffSet*60*1000;
+      var time = new Date(date.getTime()+offset);
       var data = response[0];
       var dataSend = {
         email: data.email,
