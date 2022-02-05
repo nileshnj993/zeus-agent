@@ -1,4 +1,4 @@
-Developed this web-app as part of the Sabre India Bootcamp Demo Presentation 2022.
+### Developed this web-app as part of the Sabre India Bootcamp Demo Presentation 2022.
 
 **Zeus Agent** is a Sticky Notes App meant to solve a hypothetical situation of Zeus Fly employees wanting to share time sensitive information with other employees and customers.
 
