@@ -20,9 +20,9 @@ The various features it has include:
 
 MongoDB Atlas was used for a cloud based database environment, and the entire project was dockerized and deployed on GCP.
 
-You can access the website at [Zeus Agent](https://zeus-agent-ob6jn6iixq-el.a.run.app/)
+The app was deployed on a GCP instance during the demo. It has now been taken down to avoid extra costs.
 
-If the deployed application is unavailable/taken down, you can locally run the app following the below steps:
+Instead, you can locally run the app by following the below steps:
 
 1. Clone the git repository onto your local system. Ensure you have node and npm installed.
 2. Run the command `npm install` to download all the dependencies.
